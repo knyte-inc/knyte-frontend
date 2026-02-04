@@ -4,7 +4,6 @@ A futuristic AI employee management dashboard built for Knyte's 8-day YC demo. T
 
 ## Design Philosophy
 
-The UI follows a **cyberpunk/sci-fi aesthetic** with a dark blue color scheme (#1e40af) inspired by Brev's design language. The interface emphasizes:
 
 - **Glassmorphism**: Frosted glass cards with backdrop blur effects
 - **Neon Accents**: Glowing borders and pulsing status indicators
@@ -232,20 +231,3 @@ Tested on:
 - Firefox 88+
 - Safari 14+
 - Edge 90+
-
-## Contributing
-
-This is a demo project for Knyte's YC presentation. For production use, consider:
-- Adding TypeScript for type safety
-- Implementing comprehensive error boundaries
-- Adding unit tests (Jest/Vitest + React Testing Library)
-- Setting up E2E tests (Playwright/Cypress)
-- Adding accessibility improvements (ARIA labels, keyboard navigation)
-
-## License
-
-Proprietary - Knyte 2024
-
----
-
-Built with ⚡️ by Guntash for Knyte's YC Demo Day
