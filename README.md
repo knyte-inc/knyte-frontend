@@ -98,6 +98,9 @@ Displays individual AI employee information with:
 - Task duration
 - Last active timestamp (relative time)
 - Created date (exact date format)
+- VM instance information
+- GPU status indicator
+- Approval pending indicator
 - Glassmorphism card with glow on hover
 - Animated status with breathing glow effect
 
@@ -110,7 +113,10 @@ Displays individual AI employee information with:
   currentTask: string,   // Task description
   taskDuration: string,  // e.g., "12 minutes"
   lastActive: Date,      // JavaScript Date object
-  createdAt: Date        // JavaScript Date object
+  createdAt: Date,       // JavaScript Date object
+  vmInstance: string,    // e.g., "vm-dev-us-east-1a-042"
+  hasGpu: boolean,       // GPU enabled/disabled
+  hasApprovalPending: boolean  // Shows approval indicator
 }
 ```
 
@@ -118,12 +124,11 @@ Displays individual AI employee information with:
 **File**: [ActivityLog.jsx](src/components/ActivityLog.jsx)
 
 Real-time activity feed with:
-- Color-coded activity icons (F=file, G=git, C=command, T=test, E=error)
 - Employee filter dropdown
 - Relative timestamps
 - Glassmorphism with sliding accent bar on hover
-- Icon glow effects that intensify on hover
 - Auto-scrolling list (max 400px height)
+- Clear logs functionality
 
 **Log Entry Props**:
 ```javascript
@@ -139,12 +144,11 @@ Real-time activity feed with:
 **File**: [ApprovalCard.jsx](src/components/ApprovalCard.jsx)
 
 Prominent approval workflow UI with:
-- Pulsing glow animation to draw attention
-- Sliding neon line across top border
 - Expandable syntax-highlighted diff viewer
 - Color-coded additions (green) and deletions (red)
-- Approve/Decline buttons with ripple effects
+- Approve/Decline buttons with state management
 - Impact badge (Low/Medium/High)
+- Smooth scroll-to functionality when clicking approval indicator
 
 **Approval Props**:
 ```javascript
@@ -166,11 +170,11 @@ Prominent approval workflow UI with:
 
 ## Mock Data
 
-Currently using in-memory mock data in [App.jsx](src/App.jsx:9-81). This demonstrates the UI without backend dependencies.
+Currently using in-memory mock data in [App.jsx](src/App.jsx). This demonstrates the UI without backend dependencies.
 
 ### Employee Mock Data
 ```javascript
-const [employees] = useState([
+const [employees, setEmployees] = useState([
   {
     name: 'dev-ai-001',
     role: 'Developer',
@@ -178,7 +182,10 @@ const [employees] = useState([
     currentTask: 'Fixing auth bug in login.py',
     taskDuration: '12 minutes',
     createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-    lastActive: new Date(Date.now() - 2 * 60000)
+    lastActive: new Date(Date.now() - 2 * 60000),
+    vmInstance: 'vm-dev-us-east-1a-042',
+    hasGpu: true,
+    hasApprovalPending: true
   }
 ]);
 ```
@@ -188,222 +195,6 @@ const [employees] = useState([
 
 ### Approval Request Mock Data
 Sample PR approval with actual diff content for authentication bug fix.
-
-## Integration Guide: Moving from Mock to Real API
-
-When your backend API is ready, follow these steps:
-
-### 1. Install API Client
-```bash
-npm install axios
-# or
-npm install @tanstack/react-query axios
-```
-
-### 2. Create API Service
-Create `src/services/api.js`:
-```javascript
-import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-export const fetchEmployees = async () => {
-  const { data } = await api.get('/employees');
-  return data;
-};
-
-export const fetchActivityLogs = async () => {
-  const { data } = await api.get('/activity-logs');
-  return data;
-};
-
-export const fetchApprovals = async () => {
-  const { data } = await api.get('/approvals');
-  return data;
-};
-
-export const approveRequest = async (approvalId) => {
-  const { data } = await api.post(`/approvals/${approvalId}/approve`);
-  return data;
-};
-
-export const declineRequest = async (approvalId) => {
-  const { data } = await api.post(`/approvals/${approvalId}/decline`);
-  return data;
-};
-
-export default api;
-```
-
-### 3. Update App.jsx
-Replace mock data with API calls:
-
-```javascript
-import { useState, useEffect } from 'react';
-import { fetchEmployees, fetchActivityLogs, fetchApprovals } from './services/api';
-
-function App() {
-  const [employees, setEmployees] = useState([]);
-  const [activityLogs, setActivityLogs] = useState([]);
-  const [approvalRequest, setApprovalRequest] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [employeesData, logsData, approvalsData] = await Promise.all([
-          fetchEmployees(),
-          fetchActivityLogs(),
-          fetchApprovals(),
-        ]);
-
-        setEmployees(employeesData);
-        setActivityLogs(logsData);
-        setApprovalRequest(approvalsData[0] || null); // Get first approval
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to load data:', error);
-        setLoading(false);
-      }
-    };
-
-    loadData();
-
-    // Optional: Set up polling for real-time updates
-    const interval = setInterval(loadData, 5000); // Poll every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
-  // ... rest of component
-}
-```
-
-### 4. Update ApprovalCard.jsx
-Wire up approve/decline handlers:
-
-```javascript
-import { approveRequest, declineRequest } from '../services/api';
-
-const handleApprove = async () => {
-  try {
-    await approveRequest(approval.id);
-    // Refresh data or update UI
-  } catch (error) {
-    console.error('Approval failed:', error);
-  }
-};
-
-const handleDecline = async () => {
-  try {
-    await declineRequest(approval.id);
-    // Refresh data or update UI
-  } catch (error) {
-    console.error('Decline failed:', error);
-  }
-};
-```
-
-### 5. Add Environment Variables
-Create `.env.local`:
-```
-VITE_API_URL=https://api.knyte.dev
-```
-
-### 6. Real-time Updates (Optional)
-For live updates, consider WebSocket or Server-Sent Events:
-
-```javascript
-// Using WebSocket
-const ws = new WebSocket('ws://localhost:8000/ws');
-
-ws.onmessage = (event) => {
-  const update = JSON.parse(event.data);
-  if (update.type === 'activity_log') {
-    setActivityLogs(prev => [update.data, ...prev]);
-  }
-};
-```
-
-## Expected API Response Formats
-
-### GET /employees
-```json
-[
-  {
-    "name": "dev-ai-001",
-    "role": "Developer",
-    "status": "working",
-    "currentTask": "Fixing auth bug in login.py",
-    "taskDuration": "12 minutes",
-    "lastActive": "2024-01-26T10:30:00Z",
-    "createdAt": "2024-01-19T09:00:00Z"
-  }
-]
-```
-
-### GET /activity-logs
-```json
-[
-  {
-    "type": "file",
-    "message": "Modified login.py: Fixed authentication token validation",
-    "employee": "dev-ai-001",
-    "timestamp": "2024-01-26T10:30:00Z"
-  }
-]
-```
-
-### GET /approvals
-```json
-[
-  {
-    "id": "apr-001",
-    "type": "Pull Request",
-    "employee": "dev-ai-001",
-    "description": "Request to create a pull request...",
-    "requested": "Permission to create PR",
-    "impact": "Low",
-    "diff": {
-      "file": "src/auth/login.py",
-      "additions": 12,
-      "deletions": 5,
-      "content": "@@ -45,7 +45,12 @@ def validate_token(token):\n..."
-    }
-  }
-]
-```
-
-## What's Next
-
-### Immediate TODOs
-- [ ] Connect to real backend API
-- [ ] Add authentication/authorization
-- [ ] Implement WebSocket for real-time updates
-- [ ] Add error handling and loading states
-- [ ] Create employee creation form (wire up "Hire New Employee" button)
-- [ ] Add toast notifications for approval actions
-
-### Future Enhancements
-- [ ] Employee detail view (click to expand)
-- [ ] Activity log search and advanced filtering
-- [ ] Multiple approval requests queue
-- [ ] Employee performance metrics
-- [ ] Task history and timeline view
-- [ ] Dark/light mode toggle (currently dark only)
-- [ ] Responsive mobile layout improvements
-- [ ] Export activity logs to CSV
-- [ ] Notification system for urgent approvals
 
 ## Design Tokens
 
