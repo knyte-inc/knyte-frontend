@@ -1,0 +1,169 @@
+/* gradientShift animation removed for performance */
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1419 25%, #1a1f2e 50%, #0f1419 75%, #0a0e1a 100%);
+  position: relative;
+}
+
+/* Radial gradient overlay simplified for performance */
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline removed for performance */
+
+.app > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app-header {
+  background: #1a1f2e;
+  border-bottom: 1px solid rgba(30, 64, 175, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+/* logoGlow animation and drop-shadow removed for performance */
+
+.logo {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.create-employee-btn {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2), 0 0 0 1px rgba(30, 64, 175, 0.1);
+}
+
+/* Removed button ripple effect for performance */
+
+.create-employee-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.4);
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.6);
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+}
+
+@media (max-width: 1200px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main-section {
+  min-width: 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e5e7eb;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.section-tabs {
+  display: flex;
+  gap: 8px;
+  background: #1a1f2e;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #2d3548;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  color: #e5e7eb;
+  background: rgba(30, 64, 175, 0.1);
+}
+
+.tab.active {
+  background: #1e40af;
+  color: white;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+    order: -1;
+  }
+}

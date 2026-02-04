@@ -1,0 +1,13 @@
+/* CRITICAL: Remove ALL animations, transitions, and transforms globally */
+* {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+*::before,
+*::after {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}

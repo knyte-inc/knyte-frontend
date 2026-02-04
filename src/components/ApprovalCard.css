@@ -1,0 +1,274 @@
+/* Removed approvalGlow animation for performance */
+
+.approval-card {
+  background: #1a1f2e;
+  border: 2px solid rgba(30, 64, 175, 0.6);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 20px rgba(30, 64, 175, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Removed sliding line animation for performance */
+
+.approval-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #2d3548;
+}
+
+.approval-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.approval-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e5e7eb;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.approval-type {
+  font-size: 13px;
+  color: #1e40af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.approval-badge {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 4px 8px rgba(30, 64, 175, 0.4);
+}
+
+.approval-body {
+  margin-bottom: 20px;
+}
+
+.approval-description {
+  font-size: 14px;
+  color: #d1d5db;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+.approval-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(20, 24, 36, 0.8);
+  border-radius: 10px;
+  border: 1px solid rgba(45, 53, 72, 0.5);
+}
+
+.approval-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approval-detail-label {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.approval-detail-value {
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 500;
+}
+
+.approval-impact {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.approval-impact.low {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.approval-impact.medium {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+}
+
+.approval-impact.high {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.approval-diff-section {
+  margin-top: 16px;
+}
+
+.approval-diff-toggle {
+  background: rgba(20, 24, 36, 0.8);
+  border: 1px solid rgba(45, 53, 72, 0.8);
+  color: #9ca3af;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.approval-diff-toggle:hover {
+  border-color: rgba(30, 64, 175, 0.6);
+  color: #3b82f6;
+  background: rgba(30, 64, 175, 0.1);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+  transform: translateY(-1px);
+}
+
+.approval-diff {
+  margin-top: 12px;
+  background: #0d1117;
+  border: 1px solid rgba(30, 64, 175, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.diff-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #141824;
+  border-bottom: 1px solid rgba(30, 64, 175, 0.2);
+}
+
+.diff-file {
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 500;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.diff-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.diff-additions {
+  color: #10b981;
+}
+
+.diff-deletions {
+  color: #ef4444;
+}
+
+.diff-content {
+  margin: 0;
+  padding: 0;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #d1d5db;
+  overflow-x: auto;
+}
+
+/* Simplified diff lines - removed hover effects and box-shadows for performance */
+.diff-line {
+  padding: 4px 16px;
+  display: block;
+  white-space: pre;
+}
+
+.diff-line-addition {
+  background: rgba(16, 185, 129, 0.1);
+  color: #6ee7b7;
+  border-left: 3px solid #10b981;
+}
+
+.diff-line-deletion {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border-left: 3px solid #ef4444;
+}
+
+.diff-line-location {
+  background: rgba(30, 64, 175, 0.15);
+  color: #93c5fd;
+  font-weight: 600;
+  border-left: 3px solid #3b82f6;
+  padding: 6px 16px;
+  margin: 4px 0;
+}
+
+.approval-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid #2d3548;
+}
+
+.approval-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+/* Removed button ripple effect for performance */
+
+.decline-btn {
+  background: transparent;
+  border: 1px solid rgba(45, 53, 72, 0.8);
+  color: #9ca3af;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.decline-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  transform: translateY(-2px);
+}
+
+.approve-btn {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+.approve-btn:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.4);
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.8);
+}
