@@ -1,10 +1,5 @@
 # KNYTE Dashboard
 
-A futuristic AI employee management dashboard built for Knyte's 8-day YC demo. This dashboard provides real-time monitoring, activity logging, and approval workflows for autonomous AI developer agents.
-
-## Design Philosophy
-
-
 - **Glassmorphism**: Frosted glass cards with backdrop blur effects
 - **Neon Accents**: Glowing borders and pulsing status indicators
 - **Terminal Aesthetic**: Monospace fonts for technical data and scanline overlay
